@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TodoStatus extends Model
 {
+    protected $fillable = [
+        'title'
+    ];
     //
     public function status()
     {

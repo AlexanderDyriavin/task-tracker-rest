@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\TodoStatus;
 
 class StatusSeeder extends Seeder
 {
@@ -12,8 +13,12 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('todo_statuses')->insert([
-            'title' => ['View','In Progress',"Done"]
-        ]);
+        $status = ['View','In Progress',"Done"];
+        for ($i = 0; $i < 3; $i++){
+            TodoStatus::create([
+                'title' => $status[$i]
+            ]);
+        }
+
     }
 }

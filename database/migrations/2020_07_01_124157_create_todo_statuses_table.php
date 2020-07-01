@@ -16,7 +16,7 @@ class CreateTodoStatusesTable extends Migration
         Schema::create('todo_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('task_id');
+            $table->unsignedBigInteger('task_id')->nullable();
             $table->timestamps();
             $table->index('task_id');
         });
