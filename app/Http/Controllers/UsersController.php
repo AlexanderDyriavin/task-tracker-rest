@@ -38,7 +38,7 @@ class UsersController extends Controller
         ]);
 
         $user = User::create($validation->validated());
-        return response(['message'=> 'user created','user' => new UsersResourse($user)],201);
+        return response(['message' => 'user created', 'user' => new UsersResourse($user)], 201);
     }
 
     /**
@@ -49,7 +49,7 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        return response(['message'=> 'success','user' => new UsersResourse($user)],200);
+        return response(['message' => 'success', 'user' => new UsersResourse($user)], 200);
     }
 
     /**
@@ -62,7 +62,7 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $user->update($request->input());
-        return response(['message'=> 'success','user' => new UsersResourse($user)],200);
+        return response(['message' => 'success', 'user' => new UsersResourse($user)], 200);
     }
 
     /**
@@ -74,6 +74,6 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return response(['message'=> 'user deleted'],200);
+        return response(['message' => 'user deleted'], 200);
     }
 }

@@ -18,18 +18,13 @@ use App\Http\Controllers\API\AuthController;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-Route::post('/register','Api\AuthController@register');
+Route::post('/register', 'Api\AuthController@register');
 Route::post('/login', 'Api\AuthController@login');
-Route::middleware('auth:api')->group( function () {
-    Route::resource('users', 'UsersController');
+Route::middleware('auth:api')->group(function () {
+    Route::resource('/users', 'UsersController');
 });
-Route::middleware('auth:api')->post('/users/create','UsersController@store');
-
-Route::middleware('auth:api')->group(function (){
-    Route::resource('/users','UsersController');
+Route::middleware('auth:api')->group(function () {
+    Route::resource('/todos', 'TodoController');
 });
-Route::middleware('auth:api')->group(function (){
-    Route::resource('/todos','TodoController');
-    Route::resource('/todos/{todo}/status','TodoController');
-});
-
+Route::middleware('auth:api')->post('/todos/{todo}/status', 'TodoController@updateStatus');
+Route::middleware('auth:api')->post('/todos/{todo}/user', 'TodoController@updateUser');

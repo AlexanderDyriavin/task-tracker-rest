@@ -16,12 +16,30 @@ class TodoController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $todos = Todos::all();
+        $todos = '';
+        $sorted = '';
+        $sort = $request->input('sort');
+        switch ($sort) {
+            case 'status':
+                $todos = Todos::all()->sortByDesc('status');
+                $sorted = 'by Status DESC';
+                break;
+            case 'users':
+                $todos = User::with('todos')->get()->sortByDesc('created_at');
+                $sorted = 'by User creation time';
+                break;
+            default:
+                $sorted = 'by default';
+                $todos = Todos::all();
+                break;
+        }
         return response(['status' => 'Successfully received',
+            'sort_type' => $sorted,
             'todos' => $todos], 200);
     }
 
@@ -79,8 +97,19 @@ class TodoController extends Controller
         $todo->delete();
         return response(['message' => 'Task was deleted'], 404);
     }
-    public function updateStatus(Todos $todo)
+
+    public function updateStatus($id, Request $request)
     {
-        dd($todo);
+        $todo = Todos::findOrFail($id);
+        $todo->updateStatus($id, $request->input('status'));
+        return response(['message' => 'Status was updated',
+            'task' => new TodosResource($todo)], 200);
+    }
+
+    public function updateUser($id, Request $request)
+    {
+        $todo = Todos::find($id);
+        $todo->updateAssignedUser($id, $request->input('user_id'));
+
     }
 }
