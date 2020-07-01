@@ -20,3 +20,10 @@ use App\Http\Controllers\API\AuthController;
 //});
 Route::post('/register','Api\AuthController@register');
 Route::post('/login', 'Api\AuthController@login');
+Route::middleware('auth:api')->group( function () {
+    Route::resource('users', 'UsersController');
+});
+Route::middleware('auth:api')->post('/users/create','UsersController@store');
+Route::middleware('auth:api')->group(function (){
+    Route::resource('/users','UsersController');
+});
