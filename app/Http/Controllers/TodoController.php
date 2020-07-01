@@ -24,20 +24,31 @@ class TodoController extends Controller
         $todos = '';
         $sorted = '';
         $sort = $request->input('sort');
-        switch ($sort) {
-            case 'status':
-                $todos = Todos::all()->sortByDesc('status');
-                $sorted = 'by Status DESC';
+        switch (strtolower($sort)) {
+            case 'done':
+                $sorted = 'Done';
+                $todos = Todos::all()->where('status', '=', $sort);
+                break;
+            case 'in progress':
+                $sorted = 'In progress';
+
+                $todos = Todos::all()->where('status', '=', $sort);
+                break;
+            case 'view':
+                $sorted = 'view';
+
+                $todos = Todos::all()->where('status', '=', $sort);
                 break;
             case 'users':
+                $sorted = 'Users';
                 $todos = User::with('todos')->get()->sortByDesc('created_at');
-                $sorted = 'by User creation time';
                 break;
             default:
-                $sorted = 'by default';
+                $sorted = 'All Tasks';
                 $todos = Todos::all();
                 break;
         }
+
         return response(['status' => 'Successfully received',
             'sort_type' => $sorted,
             'todos' => $todos], 200);
