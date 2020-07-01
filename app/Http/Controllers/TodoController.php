@@ -6,6 +6,7 @@ use App\Http\Resources\TodosResource;
 use App\Http\Resources\UsersResourse;
 use App\Models\Todos;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -63,11 +64,8 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todos $todo)
     {
-        $todos = Todos::find($id);
-        dd($todos);
-        $todos->update($request->input());
-        dd($todos->update(['title' => $request->title]));
-        return response(['message'=> 'success','todos' => new UsersResourse($todos)],200);
+        $todo->update($request->input());
+        return response(['message' => 'successfully updated', 'todo' => new TodosResource($todo)], 200);
     }
 
     /**
@@ -76,8 +74,9 @@ class TodoController extends Controller
      * @param \App\Models\Todos $todos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Todos $todos)
+    public function destroy(Todos $todo)
     {
-        //
+        $todo->delete();
+        return response(['message' => 'Task was deleted'], 404);
     }
 }
