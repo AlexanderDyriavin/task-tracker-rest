@@ -16,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(10);
         return response(['message' => 'Successfully received',
             'users' => $users], 200);
     }
