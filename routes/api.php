@@ -30,5 +30,6 @@ Route::middleware('auth:api')->group(function (){
 });
 Route::middleware('auth:api')->group(function (){
     Route::resource('/todos','TodoController');
+    Route::resource('/todos/{todo}/status','TodoController');
 });
 

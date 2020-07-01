@@ -14,6 +14,10 @@ class Todos extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function status()
+    {
+        $this->hasOne(TodoStatus::class);
+    }
     public function users()
     {
         return $this->hasMany(Users::class);

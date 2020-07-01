@@ -49,17 +49,17 @@ class TodoController extends Controller
      * @param \App\Models\Todos $todos
      * @return \Illuminate\Http\Response
      */
-    public function show(Todos $todos)
+    public function show(Todos $todo)
     {
         return response(['message' => 'Success',
-            'task' => new TodosResource($todos)]);
+            'task' => new TodosResource($todo)]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Todos $todos
+     * @param Todos $todo
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Todos $todo)
@@ -71,12 +71,16 @@ class TodoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Todos $todos
+     * @param Todos $todo
      * @return \Illuminate\Http\Response
      */
     public function destroy(Todos $todo)
     {
         $todo->delete();
         return response(['message' => 'Task was deleted'], 404);
+    }
+    public function updateStatus(Todos $todo)
+    {
+        dd($todo);
     }
 }
